@@ -16,18 +16,24 @@ namespace CommonScheme.ConfigCore.ClientServices
         public static void Initialization()
         {
             MapConfigClient = new Dictionary<string, ConcurrentQueue<string>>();
+            Monitor();
         }
-        public static void AddConfig(string clinetCode)
+        public static void RegisterConfig(string clientCode)
         {
-            if (MapConfigClient.ContainsKey(clinetCode) == false)
-                MapConfigClient.Add(clinetCode, new ConcurrentQueue<string>());
+            if (MapConfigClient.ContainsKey(clientCode) == false)
+                MapConfigClient.Add(clientCode, new ConcurrentQueue<string>());
         }
-        public static void AddConfig(string clinetCode, string configKey)
+        public static void RegisterConfig(string clientCode, string configKey)
         {
-            AddConfig(clinetCode);
-            MapConfigClient[clinetCode].Enqueue(configKey); ;
+            RegisterConfig(clientCode);
+            MapConfigClient[clientCode].Enqueue(configKey); ;
         }
-        public static void Monitor()
+        public static void CancelConfig(string clientCode)
+        {
+            if (MapConfigClient.ContainsKey(clientCode))
+                MapConfigClient.Remove(clientCode);
+        }
+        private static void Monitor()
         {
             Task.Run(() =>
             {
@@ -36,32 +42,43 @@ namespace CommonScheme.ConfigCore.ClientServices
                     Thread.Sleep(1000 * 10);
                     if (num < 1 && MapConfigClient.Any(x => x.Value.Count > 0))
                         continue;
-                    foreach (var clinetCode in MapConfigClient.Keys)
+                    try
                     {
-                        if (MapConfigClient[clinetCode].Count() <= 1)
-                            continue;
-                        Task.Factory.StartNew(new Action<object>(PushConfig), clinetCode);
+                        foreach (var clientCode in MapConfigClient.Keys)
+                        {
+                            if (MapConfigClient[clientCode].Count() <= 1)
+                                continue;
+                            Task.Factory.StartNew(new Action<object>(PushConfig), clientCode);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        num = 0;
                     }
                 }
             });
         }
         private static void PushConfig(object data)
         {
-            string clinetCode = (string)data;
+            string clientCode = (string)data;
             while (true)
             {
                 string configKey = null;
-                if (MapConfigClient[clinetCode].TryDequeue(out configKey) == false || configKey == null)
+                if (MapConfigClient.ContainsKey(clientCode) == false || MapConfigClient[clientCode].TryDequeue(out configKey) == false || configKey == null)
                     break;
                 ConfigEntity config = new ConfigEntity();
                 try
                 {
+                    num++;
                     ClientHttpModel client = new ClientHttpModel();
                     ClientFactory.GetInstace("HttpPushClient").Push(config);
                 }
-                catch (Exception ex) {
-                    MapConfigClient[clinetCode].Enqueue(configKey);
+                catch (Exception ex)
+                {
+                    try { MapConfigClient[clientCode].Enqueue(configKey); }
+                    finally { }
                 }
+                finally { num--; }
             }
         }
     }

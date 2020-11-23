@@ -10,6 +10,9 @@ namespace CommonScheme.ConfigCore.Models
         public string Code { get; set; }
         public string Name { get; set; }
         public string IPAddress { get; set; }
+        /// <summary>
+        /// 证书编码
+        /// </summary>
         public string CertCode { get; set; }
     }
     public class ClientHttpModel: ClientModel
@@ -30,8 +33,8 @@ namespace CommonScheme.ConfigCore.Models
     public class ClientPushModel
     {
         public int ClientID { get; set; }
-        public string ClientCode { get; set; }
         public string ConfigID { get; set; }
+        public string ClientCode { get; set; }
         public string ConfigCode { get; set; }
         public DateTime PushTime { get; set; }
         public int PushStatus { get; set; }
