@@ -39,7 +39,7 @@ namespace CommonScheme.ConfigCore.ClientServices
             {
                 while (true)
                 {
-                    Thread.Sleep(1000 * 10);
+                    Thread.Sleep(1000 * 5);
                     if (num < 1 && MapConfigClient.Any(x => x.Value.Count > 0))
                         continue;
                     try

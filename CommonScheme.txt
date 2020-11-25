@@ -1,0 +1,3 @@
+CommonScheme.NetCore.SysAuthority
+CommonScheme.QuartzCore
+IdentityServer4Host
