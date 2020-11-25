@@ -11,27 +11,27 @@ namespace CommonScheme.ConfigCore.ClientServices
 {
     public class ClientMonitor
     {
-        private static Dictionary<string, ConcurrentQueue<string>> MapConfigClient;
+        private static Dictionary<int, ConcurrentQueue<string>> MapConfigClient;
         private static int num = 0;
         public static void Initialization()
         {
-            MapConfigClient = new Dictionary<string, ConcurrentQueue<string>>();
+            MapConfigClient = new Dictionary<int, ConcurrentQueue<string>>();
             Monitor();
         }
-        public static void RegisterConfig(string clientCode)
+        public static void RegisterConfig(int clientID)
         {
-            if (MapConfigClient.ContainsKey(clientCode) == false)
-                MapConfigClient.Add(clientCode, new ConcurrentQueue<string>());
+            if (MapConfigClient.ContainsKey(clientID) == false)
+                MapConfigClient.Add(clientID, new ConcurrentQueue<string>());
         }
-        public static void RegisterConfig(string clientCode, string configKey)
+        public static void RegisterConfig(int clientID, string configKey)
         {
-            RegisterConfig(clientCode);
-            MapConfigClient[clientCode].Enqueue(configKey); ;
+            RegisterConfig(clientID);
+            MapConfigClient[clientID].Enqueue(configKey); ;
         }
-        public static void CancelConfig(string clientCode)
+        public static void CancelConfig(int clientID)
         {
-            if (MapConfigClient.ContainsKey(clientCode))
-                MapConfigClient.Remove(clientCode);
+            if (MapConfigClient.ContainsKey(clientID))
+                MapConfigClient.Remove(clientID);
         }
         private static void Monitor()
         {
@@ -44,11 +44,11 @@ namespace CommonScheme.ConfigCore.ClientServices
                         continue;
                     try
                     {
-                        foreach (var clientCode in MapConfigClient.Keys)
+                        foreach (var clientID in MapConfigClient.Keys)
                         {
-                            if (MapConfigClient[clientCode].Count() <= 1)
+                            if (MapConfigClient[clientID].Count() <= 1)
                                 continue;
-                            Task.Factory.StartNew(new Action<object>(PushConfig), clientCode);
+                            Task.Factory.StartNew(new Action<object>(PushConfig), clientID);
                         }
                     }
                     catch (Exception ex)
@@ -60,11 +60,11 @@ namespace CommonScheme.ConfigCore.ClientServices
         }
         private static void PushConfig(object data)
         {
-            string clientCode = (string)data;
+            int clientID = (int)data;
             while (true)
             {
                 string configKey = null;
-                if (MapConfigClient.ContainsKey(clientCode) == false || MapConfigClient[clientCode].TryDequeue(out configKey) == false || configKey == null)
+                if (MapConfigClient.ContainsKey(clientID) == false || MapConfigClient[clientID].TryDequeue(out configKey) == false || configKey == null)
                     break;
                 ConfigEntity config = new ConfigEntity();
                 try
@@ -75,7 +75,7 @@ namespace CommonScheme.ConfigCore.ClientServices
                 }
                 catch (Exception ex)
                 {
-                    try { MapConfigClient[clientCode].Enqueue(configKey); }
+                    try { MapConfigClient[clientID].Enqueue(configKey); }
                     finally { }
                 }
                 finally { num--; }

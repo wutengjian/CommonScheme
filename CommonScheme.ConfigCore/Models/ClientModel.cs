@@ -14,6 +14,7 @@ namespace CommonScheme.ConfigCore.Models
         /// 证书编码
         /// </summary>
         public string CertCode { get; set; }
+        public int ClientState { get; set; }
     }
     public class ClientHttpModel: ClientModel
     {
@@ -38,5 +39,11 @@ namespace CommonScheme.ConfigCore.Models
         public string ConfigCode { get; set; }
         public DateTime PushTime { get; set; }
         public int PushStatus { get; set; }
+    }
+    public class RegistClientModel {
+        public int ID { get; set; }
+        public int ClientState { get; set; }
+        public string PushType { get; set; }
+        public ConfigEntity Config { get; set; }
     }
 }
