@@ -76,11 +76,35 @@ namespace CommonScheme.ConfigAPI.Controllers
         #endregion
 
         #region 客户端注册
-        [Route("/api/OAConfig/RegisterClient")]
+        [Route("/api/OAConfig/AddClient")]
         [HttpPost]
-        public void RegisterClient(ClientModel client)
+        public int AddClient(ClientModel model)
         {
-            registerConfig(client, null);
+            return OAFactory.GetInstace().AddClient(model);
+        }
+        [Route("/api/OAConfig/EditClient")]
+        [HttpPost]
+        public bool EditClient(ClientModel model)
+        {
+            return OAFactory.GetInstace().EditClient(model);
+        }
+        [Route("/api/OAConfig/DeleteClient")]
+        [HttpPost]
+        public bool DeleteClient(ClientModel model)
+        {
+            return OAFactory.GetInstace().DeleteClient(model);
+        }
+        [Route("/api/OAConfig/GetClient")]
+        [HttpPost]
+        public ClientModel GetClient(ClientModel model)
+        {
+            return OAFactory.GetInstace().GetClient(model);
+        }
+        [Route("/api/OAConfig/GetClients")]
+        [HttpPost]
+        public List<ClientModel> GetClients(List<ClientModel> models)
+        {
+            return OAFactory.GetInstace().GetClients(models);
         }
         [Route("/api/OAConfig/RegisterHttpClient")]
         [HttpPost]
