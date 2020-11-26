@@ -7,66 +7,62 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
-namespace CommonScheme.ConfigCore.DBServices.SqlServers
+namespace CommonScheme.ConfigCore.DBStorages.SqlServers
 {
-    public class DBClientPushDal : IDBClientPushDal
+    public class DBClientDal:IDBClientDal
     {
         private string _connStr = "";
-        public int AddConfig(ClientPushModel model)
+        public int AddClient(ClientModel model)
         {
             int ID = 0;
             using (var conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                ID = conn.Insert<ClientPushModel>(model, commandTimeout: 60);
+                ID = conn.Insert<ClientModel>(model, commandTimeout: 60);
                 conn.Close();
             }
             return ID;
         }
-
-        public bool EditConfig(ClientPushModel model)
+        public bool EditClient(ClientModel model)
         {
             bool result = false;
             using (var conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                result = conn.Update<ClientPushModel>(model, commandTimeout: 60);
+                result = conn.Update<ClientModel>(model, commandTimeout: 60);
                 conn.Close();
             }
             return result;
         }
-
-        public bool DeleteConfig(ClientPushModel model)
+        public bool DeleteClient(ClientModel model)
         {
             bool result = false;
             using (var conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                result = conn.Delete<ClientPushModel>(model, commandTimeout: 60);
+                result = conn.Delete<ClientModel>(model, commandTimeout: 60);
                 conn.Close();
             }
             return result;
         }
-
-        public ClientPushModel GetConfig(ClientPushModel model)
+        public ClientModel GetClient(ClientModel model)
         {
-            ClientPushModel result = null;
+            ClientModel result = null;
             using (var conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                result = conn.Get<ClientPushModel>(model.ClientID, commandTimeout: 60);
+                result = conn.Get<ClientModel>(model.ID, commandTimeout: 60);
                 conn.Close();
             }
             return result;
         }
-
-        public List<ClientPushModel> GetConfigs(List<ClientPushModel> models)
+        public List<ClientModel> GetClients(List<ClientModel> models)
         {
-            List<ClientPushModel> result = null;
+            List<ClientModel> result = null;
             using (var conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                result = conn.GetList<ClientPushModel>(models.Select(x => x.ClientID).ToArray(), commandTimeout: 60).ToList();
+                result = conn.GetList<ClientModel>(models.Select(x => x.ID).ToArray(), commandTimeout: 60).ToList();
                 conn.Close();
             }
             return result;

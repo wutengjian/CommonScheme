@@ -1,5 +1,5 @@
 ﻿using CommonScheme.ConfigCore.CacheServices;
-using CommonScheme.ConfigCore.DBServices;
+using CommonScheme.ConfigCore.DBStorages;
 using CommonScheme.ConfigCore.Models;
 using System;
 using System.Collections.Generic;
@@ -13,7 +13,6 @@ namespace CommonScheme.ConfigCore.ClientServices
         {
             throw new NotImplementedException();
         }
-
         public virtual ConfigEntity GetEntity(ConfigEntity config)
         {
             string key = CacheFactory.MadePrefix(config.Code, config.ParentID);

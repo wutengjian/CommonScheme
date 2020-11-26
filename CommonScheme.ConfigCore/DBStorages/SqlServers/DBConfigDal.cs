@@ -7,66 +7,66 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 
-namespace CommonScheme.ConfigCore.DBServices.SqlServers
+namespace CommonScheme.ConfigCore.DBStorages.SqlServers
 {
-    public class DBClientDal:IDBClientDal
+    public class DBConfigDal:IDBConfigDal
     {
         private string _connStr = "";
-        public int AddConfig(ClientModel model)
+        public  int AddConfig(ConfigModel model)
         {
             int ID = 0;
             using (var conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                ID = conn.Insert<ClientModel>(model, commandTimeout: 60);
+                ID = conn.Insert<ConfigModel>(model, commandTimeout: 60);
                 conn.Close();
             }
             return ID;
         }
 
-        public bool EditConfig(ClientModel model)
+        public  bool EditConfig(ConfigModel model)
         {
             bool result = false;
             using (var conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                result = conn.Update<ClientModel>(model, commandTimeout: 60);
+                result = conn.Update<ConfigModel>(model, commandTimeout: 60);
                 conn.Close();
             }
             return result;
         }
 
-        public bool DeleteConfig(ClientModel model)
+        public  bool DeleteConfig(ConfigModel model)
         {
             bool result = false;
             using (var conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                result = conn.Delete<ClientModel>(model, commandTimeout: 60);
+                result = conn.Delete<ConfigModel>(model, commandTimeout: 60);
                 conn.Close();
             }
             return result;
         }
 
-        public ClientModel GetConfig(ClientModel model)
+        public  ConfigModel GetConfig(ConfigModel model)
         {
-            ClientModel result = null;
+            ConfigModel result = null;
             using (var conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                result = conn.Get<ClientModel>(model.ID, commandTimeout: 60);
+                result = conn.Get<ConfigModel>(model.ID, commandTimeout: 60);
                 conn.Close();
             }
             return result;
         }
 
-        public List<ClientModel> GetConfigs(List<ClientModel> models)
+        public  List<ConfigModel> GetConfigs(List<ConfigModel> models)
         {
-            List<ClientModel> result = null;
+            List<ConfigModel> result = null;
             using (var conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                result = conn.GetList<ClientModel>(models.Select(x => x.ID).ToArray(), commandTimeout: 60).ToList();
+                result = conn.GetList<ConfigModel>(models.Select(x => x.ID).ToArray(), commandTimeout: 60).ToList();
                 conn.Close();
             }
             return result;

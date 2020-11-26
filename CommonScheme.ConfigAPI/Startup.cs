@@ -30,7 +30,7 @@ namespace CommonScheme.ConfigAPI
             {
                 app.UseDeveloperExceptionPage();
             }
-            ServicesFactory.MapFactory(AppSettings.GetAppSeting("appConfig:oaType"));
+            ServicesFactory.MapFactory();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseCors("any");

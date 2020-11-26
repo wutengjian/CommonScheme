@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CommonScheme.ConfigCore.DBServices
+namespace CommonScheme.ConfigCore.DBStorages
 {
     public interface IDBConfigDal
     {

@@ -13,9 +13,11 @@ namespace CommonScheme.ConfigCore
         /**********
          * 只能通过此服务写入配置
          * **********/
+
+        #region 配置
         public ConfigEntity GetConfig(string code,int parentId);
         public List<ConfigEntity> GetConfigs(string[] codes,int parentId);
-        public ConfigModel GetConfigs(ConfigModel config);
+        public ConfigModel GetConfig(ConfigModel config);
         public List<ConfigModel> GetConfigs(List<ConfigModel> configs);
         public int AddConfig(ConfigModel config);
         public bool AddConfigs(List<ConfigModel> configs);
@@ -23,5 +25,14 @@ namespace CommonScheme.ConfigCore
         public bool EditConfigs(List<ConfigModel> configs);
         public bool DeleteConfig(ConfigModel config);
         public bool DeleteConfigs(List<ConfigModel> configs);
+        #endregion
+
+        #region 客户端
+        public int AddClient(ClientModel model);
+        public bool EditClient(ClientModel model);
+        public bool DeleteClient(ClientModel model);
+        public ClientModel GetClient(ClientModel model);
+        public List<ClientModel> GetClients(List<ClientModel> models);
+        #endregion
     }
 }
