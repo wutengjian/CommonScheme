@@ -12,5 +12,7 @@ namespace CommonScheme.ConfigCore.DBStorages
         public bool DeleteClient(ClientModel model);
         public ClientModel GetClient(ClientModel model);
         public List<ClientModel> GetClients(List<ClientModel> models);
+        public ClientOptionModel GetClientOption(int id);
+        public bool AddClientOption(ClientOptionModel model);
     }
 }

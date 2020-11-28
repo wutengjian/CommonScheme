@@ -106,29 +106,13 @@ namespace CommonScheme.ConfigAPI.Controllers
         {
             return OAFactory.GetInstace().GetClients(models);
         }
-        [Route("/api/OAConfig/RegisterHttpClient")]
+        [Route("/api/OAConfig/RegisterClientOption")]
         [HttpPost]
-        public void RegisterHttpClient(ClientHttpModel client)
+        public void RegisterClientOption(ClientOptionModel client)
         {
-            registerConfig(client, "Http");
-        }
-        [Route("/api/OAConfig/RegisterRabbitMQClient")]
-        [HttpPost]
-        public void RegisterRabbitMQClient(ClientRabbitMQModel client)
-        {
-            registerConfig(client, "RabbitMQ");
-        }
-        [Route("/api/OAConfig/RegisterWebSocketClient")]
-        [HttpPost]
-        public void RegisterWebSocketClient(ClientWebSocketModel client)
-        {
-            registerConfig(client, "WebSocket");
-        }
-        private void registerConfig(ClientModel client, string pushType)
-        {
-            if (client.ID > 0 && client.ClientState > 0 && string.IsNullOrEmpty(pushType) == false)
+            if (client.ID > 0 && string.IsNullOrEmpty(client.PushType) == false)
                 ClientMonitor.RegisterConfig(client.ID);
-        }
+        } 
         #endregion
     }
 }

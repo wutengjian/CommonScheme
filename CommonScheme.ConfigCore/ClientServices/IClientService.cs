@@ -10,8 +10,9 @@ namespace CommonScheme.ConfigCore
     /// </summary>
     public interface IClientService
     {
-        public void Push(ConfigEntity entity);
+        public void Push(ClientOptionModel client,ConfigEntity entity);
         public ConfigEntity GetEntity(ConfigEntity config);
         public ConfigModel GetModel(ConfigEntity config);
+        public ClientOptionModel GetClientOption(int id);
     }
 }

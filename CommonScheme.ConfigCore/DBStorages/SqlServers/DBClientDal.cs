@@ -10,7 +10,7 @@ using System.Text;
 
 namespace CommonScheme.ConfigCore.DBStorages.SqlServers
 {
-    public class DBClientDal:IDBClientDal
+    public class DBClientDal : IDBClientDal
     {
         private static string _connStr = AppSettings.GetAppSeting("ConnectionStrings:CommonSchemeSqlServer");
         public int AddClient(ClientModel model)
@@ -67,6 +67,34 @@ namespace CommonScheme.ConfigCore.DBStorages.SqlServers
                 conn.Close();
             }
             return result;
+        }
+        public ClientOptionModel GetClientOption(int id)
+        {
+            ClientOptionModel result = null;
+            using (var conn = new SqlConnection(_connStr))
+            {
+                conn.Open();
+                result = conn.Get<ClientOptionModel>(id, commandTimeout: 60);
+                conn.Close();
+            }
+            return result;
+        }
+        public bool AddClientOption(ClientOptionModel model)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_connStr))
+                {
+                    conn.Open();
+                    conn.Insert<ClientOptionModel>(model, commandTimeout: 60);
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

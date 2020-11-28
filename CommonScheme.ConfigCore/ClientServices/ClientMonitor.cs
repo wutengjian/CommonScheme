@@ -6,22 +6,27 @@ using System.Threading;
 using System.Threading.Tasks;
 using CommonScheme.ConfigCore.Models;
 using System.Collections.Generic;
+using CommonScheme.ConfigCore.DBStorages;
 
 namespace CommonScheme.ConfigCore.ClientServices
 {
     public class ClientMonitor
     {
         private static Dictionary<int, ConcurrentQueue<string>> MapConfigClient;
+        private static Dictionary<int, ClientOptionModel> MapPushType;
         private static int num = 0;
         public static void Initialization()
         {
             MapConfigClient = new Dictionary<int, ConcurrentQueue<string>>();
+            MapPushType = new Dictionary<int, ClientOptionModel>();
             //Monitor();
         }
         public static void RegisterConfig(int clientID)
         {
-            if (MapConfigClient.ContainsKey(clientID) == false)
-                MapConfigClient.Add(clientID, new ConcurrentQueue<string>());
+            if (MapConfigClient.ContainsKey(clientID))
+                return;
+            MapConfigClient.Add(clientID, new ConcurrentQueue<string>());
+            MapPushType.Add(clientID, null);
         }
         public static void RegisterConfig(int clientID, string configKey)
         {
@@ -48,6 +53,13 @@ namespace CommonScheme.ConfigCore.ClientServices
                         {
                             if (MapConfigClient[clientID].Count() <= 1)
                                 continue;
+                            if (MapPushType.ContainsKey(clientID) == false)
+                                MapPushType.Add(clientID, null);
+                            if (MapPushType[clientID] == null)
+                            {
+                                var option = DBFactory.GetModel<IDBClientDal>("IDBClientDal").GetClientOption(clientID);
+                                MapPushType[clientID] = option;
+                            }
                             Task.Factory.StartNew(new Action<object>(PushConfig), clientID);
                         }
                     }
@@ -70,8 +82,11 @@ namespace CommonScheme.ConfigCore.ClientServices
                 try
                 {
                     num++;
-                    ClientHttpModel client = new ClientHttpModel();
-                    ClientFactory.GetInstace("HttpPushClient").Push(config);
+                    ClientOptionModel client = MapPushType[clientID];
+                    if(client.PushType== "Http")
+                    ClientFactory.GetInstace("HttpPushClient").Push(client,config);
+                    else if(client.PushType== "RabbitMQ")
+                        ClientFactory.GetInstace("RabbitMQPushClient").Push(client,config);
                 }
                 catch (Exception ex)
                 {

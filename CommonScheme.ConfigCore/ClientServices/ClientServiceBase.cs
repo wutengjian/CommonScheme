@@ -9,10 +9,7 @@ namespace CommonScheme.ConfigCore.ClientServices
 {
     public abstract class ClientServiceBase : IClientService
     {
-        public void Push(ConfigEntity entity)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract void Push(ClientOptionModel client,ConfigEntity entity);
         public virtual ConfigEntity GetEntity(ConfigEntity config)
         {
             ICacheService cache = CacheFactory.GetInstace();
@@ -24,7 +21,12 @@ namespace CommonScheme.ConfigCore.ClientServices
         public virtual ConfigModel GetModel(ConfigEntity config)
         {
             ConfigModel model = ConvertData.ConfigEntityToModel(config);
-            return DBFactory.GetModel<IDBConfigDal>("IDBConfigModel").GetConfig(model);
+            return DBFactory.GetModel<IDBConfigDal>("IDBConfigDal").GetConfig(model);
+        }
+
+        public ClientOptionModel GetClientOption(int id)
+        {
+            return DBFactory.GetModel<IDBClientDal>("IDBClientDal").GetClientOption(id);
         }
     }
 }

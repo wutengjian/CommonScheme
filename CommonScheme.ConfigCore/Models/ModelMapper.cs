@@ -23,4 +23,13 @@ namespace CommonScheme.ConfigCore.Models
             AutoMap();//启用自动映射，一定要调用此方法
         }
     }
+    public class ClientOptionModelMapper : ClassMapper<ClientOptionModel>
+    {
+        public ClientOptionModelMapper()
+        {
+            Table("ConfigCore_ClientOption");
+            Map(m => m.ID).Key(KeyType.Identity);// 主键的类型            
+            AutoMap();//启用自动映射，一定要调用此方法
+        }
+    }
 }

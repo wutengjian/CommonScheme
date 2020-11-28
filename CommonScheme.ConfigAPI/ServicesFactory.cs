@@ -11,8 +11,7 @@ namespace CommonScheme.ConfigAPI
         {
             ConfigCore.CacheServices.CacheFactory.SetCache(new ConfigCore.CacheServices.RedisCache());
             ConfigCore.ClientServices.ClientFactory.SetClient("HttpPushClient", new ConfigCore.ClientServices.HttpPushClient());
-            ConfigCore.ClientServices.ClientFactory.SetClient("RabbitMQClient", new ConfigCore.ClientServices.RabbitMQClient());
-            ConfigCore.ClientServices.ClientFactory.SetClient("WebSocketClient", new ConfigCore.ClientServices.WebSocketClient());
+            ConfigCore.ClientServices.ClientFactory.SetClient("RabbitMQPushClient", new ConfigCore.ClientServices.RabbitMQPushClient());
             ConfigCore.ClientServices.ClientMonitor.Initialization();
             ConfigCore.DBStorages.DBFactory.Factory();
             ConfigCore.DBStorages.DBFactory.MapModel<ConfigCore.DBStorages.IDBConfigDal>("IDBConfigDal", new ConfigCore.DBStorages.SqlServers.DBConfigDal());
