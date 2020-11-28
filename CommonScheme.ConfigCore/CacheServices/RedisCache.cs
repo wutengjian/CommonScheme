@@ -2,15 +2,16 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CommonScheme.NetCore.BasicToolKits;
+using CommonScheme.NetCore;
 
 namespace CommonScheme.ConfigCore.CacheServices
 {
     public class RedisCache : CacheServiceBase
     {
+        public RedisCache() : base() { }
         public override bool Initialization()
         {
-            CSRedisCoreKit.Initialization("");
+            CSRedisCoreKit.Initialization(AppSettings.GetAppSeting("ConnectionStrings:CommonSchemeRedis"));
             return true;
         }
         public override bool ExistsConfig(string key)
@@ -40,7 +41,7 @@ namespace CommonScheme.ConfigCore.CacheServices
 
         public override bool SetTime(string key, TimeSpan ts)
         {
-            return CSRedisCoreKit.SetTime(key,ts);
+            return CSRedisCoreKit.SetTime(key, ts);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.Concurrent;
 
-namespace CommonScheme.NetCore.BasicToolKits
+namespace CommonScheme.NetCore
 {
     public class RabbitMQKit
     {

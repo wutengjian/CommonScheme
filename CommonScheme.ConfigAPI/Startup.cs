@@ -21,16 +21,16 @@ namespace CommonScheme.ConfigAPI
         }
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
-        {
+        { 
             services.AddMvc();
+            ServicesFactory.MapFactory();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-            }
-            ServicesFactory.MapFactory();
+            } 
             app.UseStaticFiles();
             app.UseRouting();
             app.UseCors("any");

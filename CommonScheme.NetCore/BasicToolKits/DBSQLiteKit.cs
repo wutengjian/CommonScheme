@@ -5,7 +5,7 @@ using System.Data.SQLite;
 using System.Data;
 using Dapper;
 
-namespace CommonScheme.NetCore.BasicToolKits
+namespace CommonScheme.NetCore
 {
     public class DBSQLiteKit
     {

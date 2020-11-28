@@ -9,11 +9,15 @@ namespace CommonScheme.ConfigCore
     {
         public static ConfigEntity ConfigModelToEntity(ConfigModel model)
         {
+            if (model == null)
+                return null;
             ConfigEntity entity = new ConfigEntity() { };
             return entity;
         }
         public static ConfigModel ConfigEntityToModel(ConfigEntity entity)
         {
+            if (entity == null)
+                return null;
             ConfigModel model = new ConfigModel();
             return model;
         }

@@ -13,12 +13,16 @@ namespace CommonScheme.ConfigCore.OAServices
         #region 配置
         public int AddConfig(ConfigModel config)
         {
-            config.ID = DBFactory.GetModel<IDBConfigDal>("IDBConfigModel").AddConfig(config);
+            config.ID = DBFactory.GetModel<IDBConfigDal>("IDBConfigDal").AddConfig(config);
             if (config.ID > 0)
             {
                 ConfigEntity entity = ConvertData.ConfigModelToEntity(config);
-                string key = CacheFactory.MadePrefix(config.Code, config.ParentID);
-                CacheFactory.GetInstace().SetConfig(key, entity);
+                ICacheService cache = CacheFactory.GetInstace();
+                if (cache != null)
+                {
+                    string key = CacheFactory.MadePrefix(config.Code, config.ParentID);
+                    cache.SetConfig(key, entity);
+                }
             }
             return config.ID;
         }
@@ -32,9 +36,14 @@ namespace CommonScheme.ConfigCore.OAServices
         }
         public bool DeleteConfig(ConfigModel config)
         {
-            DBFactory.GetModel<IDBConfigDal>("IDBConfigModel").DeleteConfig(config);
-            string key = CacheFactory.MadePrefix(config.Code, config.ParentID);
-            return CacheFactory.GetInstace().RemoveConfig(key);
+            DBFactory.GetModel<IDBConfigDal>("IDBConfigDal").DeleteConfig(config);
+            ICacheService cache = CacheFactory.GetInstace();
+            if (cache != null)
+            {
+                string key = CacheFactory.MadePrefix(config.Code, config.ParentID);
+                cache.RemoveConfig(key);
+            }
+            return true;
         }
         public bool DeleteConfigs(List<ConfigModel> configs)
         {
@@ -46,10 +55,15 @@ namespace CommonScheme.ConfigCore.OAServices
         }
         public bool EditConfig(ConfigModel config)
         {
-            DBFactory.GetModel<IDBConfigDal>("IDBConfigModel").EditConfig(config);
+            DBFactory.GetModel<IDBConfigDal>("IDBConfigDal").EditConfig(config);
             ConfigEntity entity = ConvertData.ConfigModelToEntity(config);
-            string key = CacheFactory.MadePrefix(config.Code, config.ParentID);
-            return CacheFactory.GetInstace().SetConfig(key, entity);
+            ICacheService cache = CacheFactory.GetInstace();
+            if (cache != null)
+            {
+                string key = CacheFactory.MadePrefix(config.Code, config.ParentID);
+                cache.SetConfig(key, entity);
+            }
+            return true;
         }
         public bool EditConfigs(List<ConfigModel> configs)
         {
@@ -61,8 +75,17 @@ namespace CommonScheme.ConfigCore.OAServices
         }
         public ConfigEntity GetConfig(string code, int parentId)
         {
-            string key = CacheFactory.MadePrefix(code, parentId);
-            return CacheFactory.GetInstace().GetConfig(key);
+            ICacheService cache = CacheFactory.GetInstace();
+            if (cache != null)
+            {
+                string key = CacheFactory.MadePrefix(code, parentId);
+                return cache.GetConfig(key);
+            }
+            else
+            {
+                var model = GetConfig(new ConfigModel() { Code = code, ParentID = parentId });
+                return ConvertData.ConfigModelToEntity(model);
+            } 
         }
         public List<ConfigEntity> GetConfigs(string[] codes, int parentId = 0)
         {
@@ -75,18 +98,18 @@ namespace CommonScheme.ConfigCore.OAServices
         }
         public ConfigModel GetConfig(ConfigModel config)
         {
-            return DBFactory.GetModel<IDBConfigDal>("IDBConfigModel").GetConfig(config);
+            return DBFactory.GetModel<IDBConfigDal>("IDBConfigDal").GetConfig(config);
         }
         public List<ConfigModel> GetConfigs(List<ConfigModel> configs)
         {
-            return DBFactory.GetModel<IDBConfigDal>("IDBConfigModel").GetConfigs(configs);
+            return DBFactory.GetModel<IDBConfigDal>("IDBConfigDal").GetConfigs(configs);
         }
         #endregion
 
         #region 客户端
         public int AddClient(ClientModel model)
         {
-            model.ID= DBFactory.GetModel<IDBClientDal>("IDBClientDal").AddClient(model);
+            model.ID = DBFactory.GetModel<IDBClientDal>("IDBClientDal").AddClient(model);
             if (model.ID > 0 && model.ClientState > 0)
                 ClientMonitor.RegisterConfig(model.ID);
             return model.ID;
@@ -104,7 +127,7 @@ namespace CommonScheme.ConfigCore.OAServices
         {
             if (model.ID <= 0)
                 return false;
-            bool result= DBFactory.GetModel<IDBClientDal>("IDBClientDal").DeleteClient(model);
+            bool result = DBFactory.GetModel<IDBClientDal>("IDBClientDal").DeleteClient(model);
             if (result == true)
                 ClientMonitor.CancelConfig(model.ID);
             return result;

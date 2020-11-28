@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CommonScheme.NetCore.BasicToolKits
+namespace CommonScheme.NetCore
 {
     public class DBMongoKit
     {

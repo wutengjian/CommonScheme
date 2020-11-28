@@ -9,7 +9,7 @@ namespace CommonScheme.ConfigAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class OAController : ControllerBase
     {
         #region 添加配置

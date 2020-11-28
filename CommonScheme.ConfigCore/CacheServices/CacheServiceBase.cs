@@ -7,9 +7,10 @@ namespace CommonScheme.ConfigCore.CacheServices
 {
     public abstract class CacheServiceBase : ICacheService
     {
-        public virtual bool Initialization() {
-            return true;
+        public CacheServiceBase() {
+            Initialization();
         }
+        public abstract bool Initialization();
         public virtual bool ExistsConfig(string key)
         {
             return GetConfig(key) == null ? false : true;

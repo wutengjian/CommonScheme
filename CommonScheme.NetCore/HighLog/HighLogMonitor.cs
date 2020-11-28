@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CommonScheme.NetCore
 {
-    class DBElasticSearch
+    public class HighLogMonitor
     {
     }
 }

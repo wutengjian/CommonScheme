@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CommonScheme.NetCore.BasicToolKits
+namespace CommonScheme.NetCore
 {
     public class CSRedisCoreKit
     {

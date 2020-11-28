@@ -1,4 +1,5 @@
 ﻿using CommonScheme.ConfigCore.Models;
+using CommonScheme.NetCore;
 using Dapper;
 using DapperExtensions;
 using System;
@@ -11,7 +12,7 @@ namespace CommonScheme.ConfigCore.DBStorages.SqlServers
 {
     public class DBClientDal:IDBClientDal
     {
-        private string _connStr = "";
+        private static string _connStr = AppSettings.GetAppSeting("ConnectionStrings:CommonSchemeSqlServer");
         public int AddClient(ClientModel model)
         {
             int ID = 0;

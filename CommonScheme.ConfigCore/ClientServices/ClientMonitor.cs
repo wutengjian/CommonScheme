@@ -16,7 +16,7 @@ namespace CommonScheme.ConfigCore.ClientServices
         public static void Initialization()
         {
             MapConfigClient = new Dictionary<int, ConcurrentQueue<string>>();
-            Monitor();
+            //Monitor();
         }
         public static void RegisterConfig(int clientID)
         {

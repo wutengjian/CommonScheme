@@ -7,7 +7,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CommonScheme.NetCore.BasicToolKits
+namespace CommonScheme.NetCore
 {
     /// <summary>
     /// 字符串操作

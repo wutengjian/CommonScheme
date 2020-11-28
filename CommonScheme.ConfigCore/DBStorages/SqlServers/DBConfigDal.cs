@@ -1,8 +1,10 @@
 ﻿using CommonScheme.ConfigCore.Models;
+using CommonScheme.NetCore;
 using Dapper;
 using DapperExtensions;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -10,8 +12,8 @@ using System.Text;
 namespace CommonScheme.ConfigCore.DBStorages.SqlServers
 {
     public class DBConfigDal:IDBConfigDal
-    {
-        private string _connStr = "";
+    { 
+        private static string _connStr = AppSettings.GetAppSeting("ConnectionStrings:CommonSchemeSqlServer");
         public  int AddConfig(ConfigModel model)
         {
             int ID = 0;

@@ -4,7 +4,7 @@ using System.Text;
 using StackExchange.Redis;
 using Newtonsoft.Json;
 
-namespace CommonScheme.NetCore.BasicToolKits
+namespace CommonScheme.NetCore
 {
     public class StackExchangeRedisKit
     {

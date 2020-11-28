@@ -15,8 +15,11 @@ namespace CommonScheme.ConfigCore.ClientServices
         }
         public virtual ConfigEntity GetEntity(ConfigEntity config)
         {
+            ICacheService cache = CacheFactory.GetInstace();
+            if (cache == null)
+                return null;
             string key = CacheFactory.MadePrefix(config.Code, config.ParentID);
-            return CacheFactory.GetInstace().GetConfig(key);
+            return cache.GetConfig(key);
         }
         public virtual ConfigModel GetModel(ConfigEntity config)
         {

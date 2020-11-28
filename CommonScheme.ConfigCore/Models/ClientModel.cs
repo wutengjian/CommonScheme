@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace CommonScheme.ConfigCore.Models
@@ -18,6 +20,12 @@ namespace CommonScheme.ConfigCore.Models
         /// 客户端状态，大于0：启用、小于0：关闭
         /// </summary>
         public int ClientState { get; set; }
+
+        public string Remake { get; set; }
+        public string CreateUser { get; set; }
+        public DateTime CreateTime { get; set; }
+        public string UpdateUser { get; set; }
+        public DateTime UpdateTime { get; set; }
     }
     public class ClientHttpModel : ClientModel
     {

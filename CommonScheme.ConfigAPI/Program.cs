@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 
 namespace CommonScheme.ConfigAPI
 {
@@ -27,6 +28,7 @@ namespace CommonScheme.ConfigAPI
             IConfiguration configuration = builder.Build();
             AppSettings.SetAppSetting("appConfig", configuration.GetSection("appConfig"));
             //AppSettings.SetAppSetting("Authentication", configuration.GetSection("Authentication"));
+            AppSettings.SetAppSetting("ConnectionStrings", configuration.GetSection("ConnectionStrings"));
             return Host.CreateDefaultBuilder(args)
                   .ConfigureWebHostDefaults(webBuilder =>
                   {
