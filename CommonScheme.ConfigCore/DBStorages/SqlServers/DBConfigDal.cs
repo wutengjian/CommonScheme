@@ -11,10 +11,10 @@ using System.Text;
 
 namespace CommonScheme.ConfigCore.DBStorages.SqlServers
 {
-    public class DBConfigDal:IDBConfigDal
-    { 
+    public class DBConfigDal : IDBConfigDal
+    {
         private static string _connStr = AppSettings.GetAppSeting("ConnectionStrings:CommonSchemeSqlServer");
-        public  int AddConfig(ConfigModel model)
+        public int AddConfig(ConfigModel model)
         {
             int ID = 0;
             using (var conn = new SqlConnection(_connStr))
@@ -26,7 +26,7 @@ namespace CommonScheme.ConfigCore.DBStorages.SqlServers
             return ID;
         }
 
-        public  bool EditConfig(ConfigModel model)
+        public bool EditConfig(ConfigModel model)
         {
             bool result = false;
             using (var conn = new SqlConnection(_connStr))
@@ -38,7 +38,7 @@ namespace CommonScheme.ConfigCore.DBStorages.SqlServers
             return result;
         }
 
-        public  bool DeleteConfig(ConfigModel model)
+        public bool DeleteConfig(ConfigModel model)
         {
             bool result = false;
             using (var conn = new SqlConnection(_connStr))
@@ -50,19 +50,27 @@ namespace CommonScheme.ConfigCore.DBStorages.SqlServers
             return result;
         }
 
-        public  ConfigModel GetConfig(ConfigModel model)
+        public ConfigModel GetConfig(ConfigModel model)
         {
             ConfigModel result = null;
             using (var conn = new SqlConnection(_connStr))
             {
                 conn.Open();
-                result = conn.Get<ConfigModel>(model.ID, commandTimeout: 60);
+                if (model.ID > 0)
+                    result = conn.Get<ConfigModel>(model.ID, commandTimeout: 60);
+                else if (string.IsNullOrEmpty(model.Code) == false)
+                {
+                    string query = string.Format(@"select ID,ParentID,Code,Explain,Data,DataStatus,Remake from ConfigCore_Config with(nolock) where Code='{0}' ", model.Code);
+                    if (model.ParentID >= 0)
+                        query += " and ParentID=" + model.ParentID;
+                    result = conn.QueryFirstOrDefault<ConfigModel>(query, commandTimeout: 60);
+                }
                 conn.Close();
             }
             return result;
         }
 
-        public  List<ConfigModel> GetConfigs(List<ConfigModel> models)
+        public List<ConfigModel> GetConfigs(List<ConfigModel> models)
         {
             List<ConfigModel> result = null;
             using (var conn = new SqlConnection(_connStr))

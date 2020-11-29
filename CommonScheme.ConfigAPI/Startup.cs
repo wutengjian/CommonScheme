@@ -23,7 +23,7 @@ namespace CommonScheme.ConfigAPI
         public void ConfigureServices(IServiceCollection services)
         { 
             services.AddMvc();
-            ServicesFactory.MapFactory();
+           
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

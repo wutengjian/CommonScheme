@@ -36,10 +36,8 @@ namespace CommonScheme.IdentityAPI
                            serverOptions.AllowSynchronousIO = true;//启用同步 IO
                        });
                       webBuilder = webBuilder.UseStartup<Startup>();
-                      HostDataInfo.Urls = AppSettings.GetAppSeting("appConfig:urls");
-
                       //方式二
-                      webBuilder = webBuilder.UseUrls(HostDataInfo.Urls);
+                      webBuilder = webBuilder.UseUrls(AppSettings.GetAppSeting("AppConfigs:url"));
                   });
         }
     }

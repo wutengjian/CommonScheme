@@ -17,10 +17,18 @@ namespace CommonScheme.ConfigAPI.Controllers
     //[Authorize]
     public class ClientConfigController : ControllerBase
     {
-        [Route("/api/ClientConfig/RegisterClient")]
+        [Route("/api/ClientConfig/SubscribeConfig")]
         [HttpPost]
         public void SubscribeConfig(ClientConfigModel model)
         {
+            if (model.ClientID < 1 && string.IsNullOrEmpty(model.ConfigCode) == false)
+            {
+                ConfigModel config = DBFactory.GetModel<IDBConfigDal>("IDBConfigDal").GetConfig(new ConfigModel() { ID = model.ConfigID, Code = model.ConfigCode, ParentID = model.ConfigParentID }); ;
+                if (config == null || config.ID < 1)
+                    return;
+                model.ConfigID = config.ID;
+                model.ConfigParentID = config.ParentID;
+            }
             if (model.ClientID < 1)
                 return;
             if (model.ClientState < 1)

@@ -51,7 +51,7 @@ namespace CommonScheme.NetCore
         public async Task InvokeAsync(HttpContext context)
         {
             if (context.Response.Headers.ContainsKey("hostulr") == false)
-                context.Response.Headers.Add("hostult", HostDataInfo.Urls);
+                context.Response.Headers.Add("hostult", AppSettings.GetAppSeting("AppConfigs:url"));
             await _next(context);
         }
     }

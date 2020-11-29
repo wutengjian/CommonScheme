@@ -24,7 +24,7 @@ namespace CommonScheme.IdentityAPI.Controllers
         [MyActionFilter]
         public string Get()
         {
-            return HostDataInfo.Urls + "@     JiannyWu";
+            return AppSettings.GetAppSeting("AppConfigs:url") + "@     JiannyWu";
         }
         [Route("/api/WebApiManager/MadeGuid")]
         [HttpGet]
