@@ -87,8 +87,8 @@ namespace CommonScheme.ConfigCore.ClientServices
                 mapClient[clientID].Add(configID);
             if (mapConfig.ContainsKey(configID) == false)
                 mapConfig.Add(configID, new List<int>());
-            if (mapConfig[configID].Contains(clientID) == false)
-                mapConfig[configID].Add(clientID);
+            //if (mapConfig[configID].Contains(clientID) == false)
+            //    mapConfig[configID].Add(clientID);
         }
         public static void RemoveConfig(int configID) { }
         public static void CancelClient(int clientID) { }

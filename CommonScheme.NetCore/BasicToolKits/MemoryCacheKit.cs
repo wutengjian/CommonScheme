@@ -16,6 +16,15 @@ namespace CommonScheme.NetCore
         {
             return _cache;
         }
+        public static T Get<T>(string key)
+        {
+            return _cache.Get<T>(key);
+        }
+        public static T GetOrCreate<T>(string key, Func<ICacheEntry, T> factory)
+        {
+            return _cache.GetOrCreate<T>(key, factory);
+        }
+
         /// <summary>
         /// 设置缓存(永不过期)
         /// </summary>
@@ -25,7 +34,6 @@ namespace CommonScheme.NetCore
         {
             if (string.IsNullOrWhiteSpace(key))
                 throw new ArgumentNullException(nameof(key));
-
             T v;
             if (_cache.TryGetValue(key, out v))
                 _cache.Remove(key);

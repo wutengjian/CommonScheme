@@ -19,7 +19,15 @@ namespace CommonScheme.ConfigAPI.Controllers
         {
             Console.WriteLine(config.Data);
             MemoryCacheKit.Set_NotExpire<ConfigEntity>(config.Code, config);
-            return config.Data;
+            ConfigEntity entity = MemoryCacheKit.Get<ConfigEntity>(config.Code);
+            return entity == null ? null : entity.Data;
+        }
+        [Route("/api/TestClient/GetConfig")]
+        [HttpGet]
+        public string GetConfig(string code)
+        {
+            ConfigEntity entity = MemoryCacheKit.Get<ConfigEntity>(code);
+            return entity == null ? null : entity.Data;
         }
     }
 }
