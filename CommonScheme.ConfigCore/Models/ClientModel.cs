@@ -42,18 +42,16 @@ namespace CommonScheme.ConfigCore.Models
         public string VirtualHost { get; set; }
         public string ExchangName { get; set; }
         public string EueueName { get; set; }
-    } 
-    public class RegistClientModel
+    }
+    public class ClientConfigModel
     {
-        public int ID { get; set; }
+        public int ClientID { get; set; }
         /// <summary>
         /// 客户端状态，大于0：启用、小于0：关闭
         /// </summary>
-        public int ClientState { get; set; }
-        /// <summary>
-        /// 推送给客户端的类型：rabbit、api等
-        /// </summary>
-        public string PushType { get; set; }
-        public ConfigEntity Config { get; set; }
+        public int ClientState { get; set; } 
+        public int ConfigID { get; set; }
+        public int ConfigParentID { get; set; }
+        public string ConfigCode { get; set; }
     }
 }

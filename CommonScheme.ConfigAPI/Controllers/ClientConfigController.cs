@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CommonScheme.ConfigCore.CacheServices;
 using CommonScheme.ConfigCore.ClientServices;
+using CommonScheme.ConfigCore.DBStorages;
 using CommonScheme.ConfigCore.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -13,27 +14,24 @@ namespace CommonScheme.ConfigAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ClientConfigController : ControllerBase
     {
         [Route("/api/ClientConfig/RegisterClient")]
         [HttpPost]
-        public void SubscribeConfig(RegistClientModel clientConfig)
+        public void SubscribeConfig(ClientConfigModel model)
         {
-            if (clientConfig.ID < 1)
+            if (model.ClientID < 1)
                 return;
-            if (clientConfig.ClientState > 0&&clientConfig.Config!=null)
+            if (model.ClientState < 1)
             {
-                ClientMonitor.RegisterConfig(clientConfig.ID, CacheFactory.MadePrefix(clientConfig.Config.Code, clientConfig.Config.ParentID));
+                ClientMonitor.CancelClient(model.ClientID);
+                return;
             }
-            else if (clientConfig.ClientState < 0)
-            {
-                ClientMonitor.CancelConfig(clientConfig.ID);
-            }
-            else if (string.IsNullOrEmpty(clientConfig.PushType) == false)
-            {
-                //更改推送给客户端配置
-            }
+            if (model.ConfigID > 0)
+                ClientMonitor.RegisterClient(model.ClientID, model.ConfigID);
+            else
+                ClientMonitor.RegisterClient(model.ClientID);
         }
     }
 }

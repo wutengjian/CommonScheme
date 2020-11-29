@@ -16,6 +16,7 @@ namespace CommonScheme.ConfigAPI
     {
         static void Main(string[] args)
         {
+            //string a = JsonConvert.SerializeObject(new ConfigCore.Models.RegistClientModel() { ID = 3, ClientState = 1, PushType = "Http", Config = new ConfigCore.Models.ConfigEntity() { ParentID = 0, Code = "123" } });
             var host = CreateWebHostBuilder(args).Build();
             host.Run();
         }

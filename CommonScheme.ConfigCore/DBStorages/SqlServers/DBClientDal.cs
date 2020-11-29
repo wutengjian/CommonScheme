@@ -96,5 +96,22 @@ namespace CommonScheme.ConfigCore.DBStorages.SqlServers
             }
             return true;
         }
+        public bool EditClientOption(ClientOptionModel model)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(_connStr))
+                {
+                    conn.Open();
+                    conn.Update<ClientOptionModel>(model, commandTimeout: 60);
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+            return true;
+        }
     }
 }

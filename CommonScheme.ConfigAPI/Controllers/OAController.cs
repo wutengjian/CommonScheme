@@ -111,8 +111,8 @@ namespace CommonScheme.ConfigAPI.Controllers
         public void RegisterClientOption(ClientOptionModel client)
         {
             if (client.ID > 0 && string.IsNullOrEmpty(client.PushType) == false)
-                ClientMonitor.RegisterConfig(client.ID);
-        } 
+                ClientMonitor.RegisterClient(client.ID);
+        }
         #endregion
     }
 }

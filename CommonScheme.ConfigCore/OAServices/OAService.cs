@@ -23,6 +23,7 @@ namespace CommonScheme.ConfigCore.OAServices
                     string key = CacheFactory.MadePrefix(config.Code, config.ParentID);
                     cache.SetConfig(key, entity);
                 }
+                ClientMonitor.SetConfig(entity);
             }
             return config.ID;
         }
@@ -63,6 +64,7 @@ namespace CommonScheme.ConfigCore.OAServices
                 string key = CacheFactory.MadePrefix(config.Code, config.ParentID);
                 cache.SetConfig(key, entity);
             }
+            ClientMonitor.SetConfig(entity);
             return true;
         }
         public bool EditConfigs(List<ConfigModel> configs)
@@ -85,7 +87,7 @@ namespace CommonScheme.ConfigCore.OAServices
             {
                 var model = GetConfig(new ConfigModel() { Code = code, ParentID = parentId });
                 return ConvertData.ConfigModelToEntity(model);
-            } 
+            }
         }
         public List<ConfigEntity> GetConfigs(string[] codes, int parentId = 0)
         {
@@ -111,7 +113,7 @@ namespace CommonScheme.ConfigCore.OAServices
         {
             model.ID = DBFactory.GetModel<IDBClientDal>("IDBClientDal").AddClient(model);
             if (model.ID > 0 && model.ClientState > 0)
-                ClientMonitor.RegisterConfig(model.ID);
+                ClientMonitor.RegisterClient(model.ID);
             return model.ID;
         }
         public bool EditClient(ClientModel model)
@@ -120,7 +122,7 @@ namespace CommonScheme.ConfigCore.OAServices
                 return false;
             bool result = DBFactory.GetModel<IDBClientDal>("IDBClientDal").DeleteClient(model);
             if (result == true && model.ClientState < 0)
-                ClientMonitor.CancelConfig(model.ID);
+                ClientMonitor.CancelClient(model.ID);
             return result;
         }
         public bool DeleteClient(ClientModel model)
@@ -129,7 +131,7 @@ namespace CommonScheme.ConfigCore.OAServices
                 return false;
             bool result = DBFactory.GetModel<IDBClientDal>("IDBClientDal").DeleteClient(model);
             if (result == true)
-                ClientMonitor.CancelConfig(model.ID);
+                ClientMonitor.CancelClient(model.ID);
             return result;
         }
         public ClientModel GetClient(ClientModel model)
