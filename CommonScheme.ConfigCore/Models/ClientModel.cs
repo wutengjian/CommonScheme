@@ -41,7 +41,9 @@ namespace CommonScheme.ConfigCore.Models
         public string MQConn { get; set; }
         public string VirtualHost { get; set; }
         public string ExchangName { get; set; }
-        public string EueueName { get; set; }
+        public string QueueName { get; set; }
+        public string ExchangeType { get; set; }
+        public string RouteKey { get; set; }
     }
     public class ClientConfigModel
     {
