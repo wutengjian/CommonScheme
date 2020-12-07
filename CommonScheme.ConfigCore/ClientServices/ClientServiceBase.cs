@@ -9,7 +9,7 @@ namespace CommonScheme.ConfigCore.ClientServices
 {
     public abstract class ClientServiceBase : IClientService
     {
-        public abstract void Push(ClientOptionModel client,ConfigEntity entity);
+        public abstract void Push(ClientOptionModel client, ConfigEntity entity);
         public virtual ConfigEntity GetEntity(ConfigEntity config)
         {
             ICacheService cache = CacheFactory.GetInstace();
@@ -27,6 +27,16 @@ namespace CommonScheme.ConfigCore.ClientServices
         public ClientOptionModel GetClientOption(int id)
         {
             return DBFactory.GetModel<IDBClientDal>("IDBClientDal").GetClientOption(id);
+        }
+
+        public int AddClientOption(ClientOptionModel model)
+        {
+            return 1;
+        }
+
+        public bool EditClientOption(ClientOptionModel model)
+        {
+            return true;
         }
     }
 }

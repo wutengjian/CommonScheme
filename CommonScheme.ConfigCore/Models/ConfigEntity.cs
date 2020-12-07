@@ -4,6 +4,9 @@ using System.Text;
 
 namespace CommonScheme.ConfigCore.Models
 {
+    /// <summary>
+    /// 返回配置给客户端专用模型
+    /// </summary>
     public class ConfigEntity
     {
         public int ID { get; set; }

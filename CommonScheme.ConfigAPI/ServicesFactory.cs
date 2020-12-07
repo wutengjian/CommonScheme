@@ -16,6 +16,7 @@ namespace CommonScheme.ConfigAPI
             ConfigCore.DBStorages.DBFactory.Factory();
             ConfigCore.DBStorages.DBFactory.MapModel<ConfigCore.DBStorages.IDBConfigDal>("IDBConfigDal", new ConfigCore.DBStorages.SqlServers.DBConfigDal());
             ConfigCore.DBStorages.DBFactory.MapModel<ConfigCore.DBStorages.IDBClientDal>("IDBClientDal", new ConfigCore.DBStorages.SqlServers.DBClientDal());
+            ConfigCore.DBStorages.DBFactory.MapModel<ConfigCore.DBStorages.IDBAppItemDal>("IDBAppItemDal", new ConfigCore.DBStorages.SqlServers.DBAppItemDal());
             ConfigCore.OAServices.OAFactory.SetOA(new ConfigCore.OAServices.OAService());
         }
     }

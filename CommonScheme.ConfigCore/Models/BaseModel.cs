@@ -6,11 +6,11 @@ namespace CommonScheme.ConfigCore.Models
 {
     public class BaseModel
     {
-        public int DataStatus { get; set; }
+        public virtual int DataStatus { get; set; }
         public string Remake { get; set; }
         public string CreateUser { get; set; }
         public DateTime CreateTime { get; set; }
-        public string UpdateUser{get;set;}
+        public string UpdateUser { get; set; }
         public DateTime UpdateTime { get; set; }
     }
 }

@@ -7,7 +7,8 @@ namespace CommonScheme.ConfigCore.CacheServices
 {
     public abstract class CacheServiceBase : ICacheService
     {
-        public CacheServiceBase() {
+        public CacheServiceBase()
+        {
             Initialization();
         }
         public abstract bool Initialization();
@@ -16,29 +17,13 @@ namespace CommonScheme.ConfigCore.CacheServices
             return GetConfig(key) == null ? false : true;
         }
 
-        public virtual ConfigEntity GetConfig(string key)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract ConfigEntity GetConfig(string key);
+        public abstract bool RemoveConfig(string key);
 
-        public virtual bool RemoveConfig(string key)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool SetConfig(string key, ConfigEntity config, TimeSpan ts);
 
-        public virtual bool SetConfig(string key, ConfigEntity config, TimeSpan ts)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool SetConfig(string key, ConfigEntity config);
 
-        public virtual bool SetConfig(string key, ConfigEntity config)
-        {
-            throw new NotImplementedException();
-        }
-
-        public virtual bool SetTime(string key, TimeSpan ts)
-        {
-            throw new NotImplementedException();
-        }
+        public abstract bool SetTime(string key, TimeSpan ts);
     }
 }

@@ -15,5 +15,9 @@ namespace CommonScheme.ConfigCore.DBStorages
         public ClientOptionModel GetClientOption(int id);
         public bool AddClientOption(ClientOptionModel model);
         public bool EditClientOption(ClientOptionModel model);
+        public List<ClientAppItemModel> GetClientAppItems(int id);
+        public int AddClientAppItem(ClientAppItemModel model);
+        public bool EditClientAppItem(ClientAppItemModel model);
+        public bool DeleteClientAppItem(ClientAppItemModel model);
     }
 }
