@@ -32,12 +32,8 @@ namespace CommonScheme.ConfigAPI.Controllers
         {
             return OAFactory.GetInstace().DeleteAppItem(model);
         }
-        [Route("/api/OAConfig/GetClientAppItems")]
-        [HttpPost]
-        public List<ClientAppItemModel> GetClientAppItems(List<ClientAppItemModel> models)
-        {
-            return OAFactory.GetInstace().GetClientAppItems(models);
-        }
+       
+
         #endregion
 
         #region 添加配置

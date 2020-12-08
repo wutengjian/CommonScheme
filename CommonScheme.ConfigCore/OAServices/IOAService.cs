@@ -42,7 +42,7 @@ namespace CommonScheme.ConfigCore
         public int AddClientAppItem(ClientAppItemModel model);
         public bool EditClientAppItem(ClientAppItemModel model);
         public bool DeleteClientAppItem(ClientAppItemModel model);
-        public List<ClientAppItemModel> GetClientAppItems(List<ClientAppItemModel> models);
+        public List<ClientAppItemModel> GetClientAppItems(int clientID);
         #endregion
     }
 }

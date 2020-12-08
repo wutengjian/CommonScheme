@@ -11,7 +11,8 @@ namespace CommonScheme.ConfigCore.OAServices
     public class OAService : IOAService
     {
         #region 项目、模块
-        public AppItemModel GetAppItem(AppItemModel model) {
+        public AppItemModel GetAppItem(AppItemModel model)
+        {
             if (model.ID <= 0)
                 return null;
             return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").GetAppItem(model);
@@ -20,7 +21,8 @@ namespace CommonScheme.ConfigCore.OAServices
         {
             return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").AddAppItem(model);
         }
-        public bool EditAppItem(AppItemModel model) {
+        public bool EditAppItem(AppItemModel model)
+        {
             return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").EditAppItem(model);
         }
         public bool DeleteAppItem(AppItemModel model) { return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").DeleteAppItem(model); }
@@ -43,7 +45,7 @@ namespace CommonScheme.ConfigCore.OAServices
             }
             return config.ID;
         }
-    
+
         public bool DeleteConfig(ConfigModel config)
         {
             DBFactory.GetModel<IDBConfigDal>("IDBConfigDal").DeleteConfig(config);
@@ -55,7 +57,7 @@ namespace CommonScheme.ConfigCore.OAServices
             }
             return true;
         }
-      
+
         public bool EditConfig(ConfigModel config)
         {
             DBFactory.GetModel<IDBConfigDal>("IDBConfigDal").EditConfig(config);
@@ -69,7 +71,7 @@ namespace CommonScheme.ConfigCore.OAServices
             ClientMonitor.SetConfig(entity);
             return true;
         }
- 
+
         public ConfigEntity GetConfig(string code, int parentId)
         {
             ICacheService cache = CacheFactory.GetInstace();
@@ -143,10 +145,22 @@ namespace CommonScheme.ConfigCore.OAServices
         #endregion
 
         #region 客户端--模块
-        public int AddClientAppItem(ClientAppItemModel model) { return 1; }
-        public bool EditClientAppItem(ClientAppItemModel model) { return true; }
-        public bool DeleteClientAppItem(ClientAppItemModel model) { return true; }
-        public List<ClientAppItemModel> GetClientAppItems(List<ClientAppItemModel> models) { return null; }
+        public int AddClientAppItem(ClientAppItemModel model)
+        {
+            return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").AddClientAppItem(model);
+        }
+        public bool EditClientAppItem(ClientAppItemModel model)
+        {
+            return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").EditClientAppItem(model); ;
+        }
+        public bool DeleteClientAppItem(ClientAppItemModel model)
+        {
+            return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").DeleteClientAppItem(model);
+        }
+        public List<ClientAppItemModel> GetClientAppItems(int clientID)
+        {
+            return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").GetClientAppItems(clientID);
+        }
         #endregion
     }
 }

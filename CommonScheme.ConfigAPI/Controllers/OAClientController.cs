@@ -16,43 +16,61 @@ namespace CommonScheme.ConfigAPI.Controllers
     public class OAClientController : ControllerBase
     {
         #region 客户端注册
-        [Route("/api/OAConfig/AddClient")]
+        [Route("/api/OAClient/AddClient")]
         [HttpPost]
         public int AddClient(ClientModel model)
         {
             return OAFactory.GetInstace().AddClient(model);
         }
-        [Route("/api/OAConfig/EditClient")]
+        [Route("/api/OAClient/EditClient")]
         [HttpPost]
         public bool EditClient(ClientModel model)
         {
             return OAFactory.GetInstace().EditClient(model);
         }
-        [Route("/api/OAConfig/DeleteClient")]
+        [Route("/api/OAClient/DeleteClient")]
         [HttpPost]
         public bool DeleteClient(ClientModel model)
         {
             return OAFactory.GetInstace().DeleteClient(model);
         }
-        [Route("/api/OAConfig/GetClient")]
+        [Route("/api/OAClient/GetClient")]
         [HttpPost]
         public ClientModel GetClient(ClientModel model)
         {
             return OAFactory.GetInstace().GetClient(model);
         }
-        [Route("/api/OAConfig/GetClients")]
+        [Route("/api/OAClient/GetClients")]
         [HttpPost]
         public List<ClientModel> GetClients(List<ClientModel> models)
         {
             return OAFactory.GetInstace().GetClients(models);
         }
-        [Route("/api/OAConfig/RegisterClientOption")]
+        [Route("/api/OAClient/RegisterClientOption")]
         [HttpPost]
         public void RegisterClientOption(ClientOptionModel client)
         {
             if (client.ID > 0 && string.IsNullOrEmpty(client.PushType) == false)
                 ClientMonitor.RegisterClient(client.ID);
         }
+        #endregion
+
+        #region 客户端模块关系
+        [Route("/api/OAClient/GetClientAppItems")]
+        [HttpGet]
+        public List<ClientAppItemModel> GetClientAppItems(int clientID)
+        {
+            return OAFactory.GetInstace().GetClientAppItems(clientID);
+        }
+        [Route("/api/OAClient/AddClientAppItem")]
+        [HttpPost]
+        public int AddClientAppItem(ClientAppItemModel model) { return OAFactory.GetInstace().AddClientAppItem(model); }
+        [Route("/api/OAClient/EditClientAppItem")]
+        [HttpPost]
+        public bool EditClientAppItem(ClientAppItemModel model) { return OAFactory.GetInstace().EditClientAppItem(model); }
+        [Route("/api/OAClient/DeleteClientAppItem")]
+        [HttpPost]
+        public bool DeleteClientAppItem(ClientAppItemModel model) { return OAFactory.GetInstace().DeleteClientAppItem(model); }
         #endregion
     }
 }
