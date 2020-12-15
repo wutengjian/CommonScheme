@@ -13,28 +13,6 @@ namespace CommonScheme.ConfigAPI.Controllers
     public class OAConfigController : ControllerBase
     {
         public OAConfigController() { }
-        #region 项目、模块
-        [Route("/api/OAConfig/AddAppItem")]
-        [HttpPost]
-        public int AddAppItem(AppItemModel model)
-        {
-            return OAFactory.GetInstace().AddAppItem(model);
-        }
-        [Route("/api/OAConfig/EditAppItem")]
-        [HttpPost]
-        public bool EditAppItem(AppItemModel model)
-        {
-            return OAFactory.GetInstace().EditAppItem(model);
-        }
-        [Route("/api/OAConfig/DeleteAppItem")]
-        [HttpPost]
-        public bool DeleteAppItem(AppItemModel model)
-        {
-            return OAFactory.GetInstace().DeleteAppItem(model);
-        }
-       
-
-        #endregion
 
         #region 添加配置
         [Route("/api/OAConfig/AddConfig")]

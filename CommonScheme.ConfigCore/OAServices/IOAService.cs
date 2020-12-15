@@ -13,12 +13,6 @@ namespace CommonScheme.ConfigCore
         /**********
          * 只能通过此服务写入配置
          * **********/
-        #region 项目、模块
-        public AppItemModel GetAppItem(AppItemModel model);
-        public int AddAppItem(AppItemModel model);
-        public bool EditAppItem(AppItemModel model);
-        public bool DeleteAppItem(AppItemModel model);
-        #endregion
 
         #region 配置
         public ConfigEntity GetConfig(string code, int parentId);
@@ -36,13 +30,6 @@ namespace CommonScheme.ConfigCore
         public bool DeleteClient(ClientModel model);
         public ClientModel GetClient(ClientModel model);
         public List<ClientModel> GetClients(List<ClientModel> models);
-        #endregion
-
-        #region 客户端--模块
-        public int AddClientAppItem(ClientAppItemModel model);
-        public bool EditClientAppItem(ClientAppItemModel model);
-        public bool DeleteClientAppItem(ClientAppItemModel model);
-        public List<ClientAppItemModel> GetClientAppItems(int clientID);
         #endregion
     }
 }

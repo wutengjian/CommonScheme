@@ -10,24 +10,6 @@ namespace CommonScheme.ConfigCore.OAServices
 {
     public class OAService : IOAService
     {
-        #region 项目、模块
-        public AppItemModel GetAppItem(AppItemModel model)
-        {
-            if (model.ID <= 0)
-                return null;
-            return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").GetAppItem(model);
-        }
-        public int AddAppItem(AppItemModel model)
-        {
-            return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").AddAppItem(model);
-        }
-        public bool EditAppItem(AppItemModel model)
-        {
-            return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").EditAppItem(model);
-        }
-        public bool DeleteAppItem(AppItemModel model) { return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").DeleteAppItem(model); }
-        #endregion
-
         #region 配置
         public int AddConfig(ConfigModel config)
         {
@@ -142,25 +124,6 @@ namespace CommonScheme.ConfigCore.OAServices
             return DBFactory.GetModel<IDBClientDal>("IDBClientDal").GetClients(models);
         }
 
-        #endregion
-
-        #region 客户端--模块
-        public int AddClientAppItem(ClientAppItemModel model)
-        {
-            return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").AddClientAppItem(model);
-        }
-        public bool EditClientAppItem(ClientAppItemModel model)
-        {
-            return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").EditClientAppItem(model); ;
-        }
-        public bool DeleteClientAppItem(ClientAppItemModel model)
-        {
-            return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").DeleteClientAppItem(model);
-        }
-        public List<ClientAppItemModel> GetClientAppItems(int clientID)
-        {
-            return DBFactory.GetModel<IDBAppItemDal>("IDBAppItemDal").GetClientAppItems(clientID);
-        }
         #endregion
     }
 }

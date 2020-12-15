@@ -11,8 +11,7 @@ namespace CommonScheme.ConfigCore.Models
     public class ConfigModel : BaseModel
     {
         public int ID { get; set; }
-        public int ParentID { get; set; }
-        public int AppItemID { get; set; }        
+        public int ParentID { get; set; }   
         public string Code { get; set; }
         public string Data { get; set; }
         /// <summary>

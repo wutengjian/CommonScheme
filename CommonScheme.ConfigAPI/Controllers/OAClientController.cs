@@ -55,22 +55,5 @@ namespace CommonScheme.ConfigAPI.Controllers
         }
         #endregion
 
-        #region 客户端模块关系
-        [Route("/api/OAClient/GetClientAppItems")]
-        [HttpGet]
-        public List<ClientAppItemModel> GetClientAppItems(int clientID)
-        {
-            return OAFactory.GetInstace().GetClientAppItems(clientID);
-        }
-        [Route("/api/OAClient/AddClientAppItem")]
-        [HttpPost]
-        public int AddClientAppItem(ClientAppItemModel model) { return OAFactory.GetInstace().AddClientAppItem(model); }
-        [Route("/api/OAClient/EditClientAppItem")]
-        [HttpPost]
-        public bool EditClientAppItem(ClientAppItemModel model) { return OAFactory.GetInstace().EditClientAppItem(model); }
-        [Route("/api/OAClient/DeleteClientAppItem")]
-        [HttpPost]
-        public bool DeleteClientAppItem(ClientAppItemModel model) { return OAFactory.GetInstace().DeleteClientAppItem(model); }
-        #endregion
     }
 }
